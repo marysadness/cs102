@@ -21,7 +21,6 @@ def is_prime(n):
     elif n <= 1:
         h = False
     return h
-    pass
 
 
 def gcd(a, b):
@@ -34,8 +33,12 @@ def gcd(a, b):
     1
     """
     # PUT YOUR CODE HERE
-    pass
-
+    while a != 0 and b != 0:
+        if a > b:
+            a %= b
+        else:
+            b %= a
+    return (max(a, b))
 
 def multiplicative_inverse(e, phi):
     """

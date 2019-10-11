@@ -14,13 +14,10 @@ def is_prime(n):
     """
     # PUT YOUR CODE HERE
     prime = True
-    if n > 3:
-        for i in range(2, n // 2 + 1):
-            if n % i == 0:
-                prime = False
-                break
-    elif n <= 1:
-        prime = False
+    for i in range(2, n // 2 + 1):
+        if n % i == 0:
+            prime = False
+            break
     return prime
 
 
@@ -91,9 +88,8 @@ def generate_keypair(p, q):
     return ((e, n), (d, n))
 
 
-def encrypt(pk, plaintext):
-    # Unpack the key into it's components
-    key, n = pk
+def encrypt(l, plaintext):
+    key, n = l
     # Convert each letter in the plaintext to numbers based on
     # the character using a^b mod m
     cipher = [(ord(char) ** key) % n for char in plaintext]
@@ -101,8 +97,8 @@ def encrypt(pk, plaintext):
     return cipher
 
 
-def decrypt(pk, ciphertext):
-    key, n = pk
+def decrypt(l, ciphertext):
+    key, n = l
     plain = [chr((char ** key) % n) for char in ciphertext]
     return ''.join(plain)
 

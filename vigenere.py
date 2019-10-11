@@ -29,13 +29,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             a = ord('A')
             if position + k > z:
                 h = chr(k - (z - position) + a - 1)
-                print(h)
             else:
                 h = chr(k + position)
         ciphertext += h
     return ciphertext
 
-def encrypt_vigenere(siphertext: str, keyword: str) -> str:
+def decrypt_vigenere(siphertext: str, keyword: str) -> str:
     """
     >>> encrypt_vigenere("PYTHON", "A")
     'PYTHON'
@@ -45,7 +44,7 @@ def encrypt_vigenere(siphertext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     plaintext = ''
-    for i in range(len(psiphertextt)):
+    for i in range(len(siphertext)):
         position = ord(siphertext[i])
         h = siphertext[i]
         g = len(keyword)
@@ -64,11 +63,11 @@ def encrypt_vigenere(siphertext: str, keyword: str) -> str:
         elif (position >= ord('A') and position <= ord('Z')):
             z = ord('Z')
             a = ord('A')
-            if position + k > z:
+            if position - k > a:
                 h = chr(z - (k - (position - a)))
             else:
                 h = chr(position - k)
         plaintext += h
 
 
-    return ciphertext
+    return plaintext

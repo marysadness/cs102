@@ -13,6 +13,14 @@ def is_prime(n):
     False
     """
     # PUT YOUR CODE HERE
+    h = True
+    if n > 3:
+        for i in range(2, n // 2 + 1):
+            if n % i == 0 or i == n // 2:
+                h = False
+    elif n <= 1:
+        h = False
+    return h
     pass
 
 

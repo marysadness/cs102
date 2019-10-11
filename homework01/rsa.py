@@ -13,14 +13,15 @@ def is_prime(n):
     False
     """
     # PUT YOUR CODE HERE
-    h = True
+    prime = True
     if n > 3:
         for i in range(2, n // 2 + 1):
-            if n % i == 0 or i == n // 2:
-                h = False
+            if n % i == 0:
+                prime = False
+                break
     elif n <= 1:
-        h = False
-    return h
+        prime = False
+    return prime
 
 
 def gcd(a, b):
@@ -49,7 +50,21 @@ def multiplicative_inverse(e, phi):
     23
     """
     # PUT YOUR CODE HERE
-    pass
+    a = phi
+    b = e
+    arr = []  # (A div B)[i]
+    while a % b != 0:
+        arr.append(a // b)
+        qw = a
+        a = b
+        b = qw % b
+    x = 0
+    y = 1
+    for i in range(len(arr)):
+        qw = x
+        x = y
+        y = qw - y * arr[len(arr) - i - 1]
+    return y % phi
 
 
 def generate_keypair(p, q):
@@ -58,11 +73,8 @@ def generate_keypair(p, q):
     elif p == q:
         raise ValueError('p and q cannot be equal')
 
-    # n = pq
-    # PUT YOUR CODE HERE
-
-    # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
+    n = p * q
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
@@ -76,8 +88,6 @@ def generate_keypair(p, q):
     # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
 
-    # Return public and private keypair
-    # Public key is (e, n) and private key is (d, n)
     return ((e, n), (d, n))
 
 
@@ -92,11 +102,8 @@ def encrypt(pk, plaintext):
 
 
 def decrypt(pk, ciphertext):
-    # Unpack the key into its components
     key, n = pk
-    # Generate the plaintext based on the ciphertext and key using a^b mod m
     plain = [chr((char ** key) % n) for char in ciphertext]
-    # Return the array of bytes as a string
     return ''.join(plain)
 
 

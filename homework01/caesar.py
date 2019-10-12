@@ -13,19 +13,13 @@ def encrypt_caesar(plaintext: str) -> str:
     for i in range(len(plaintext)):
         h = plaintext[i]  # символ
         j = ord(plaintext[i])  # номер позиции символа
-        if (j >= ord('a') and j <= ord('w')) or (j >= ord('A') and j <= ord('W')):
-            h = chr(j + 3)
-        elif (j >= ord('x') and j <= ord('z')):
-            z = ord('z')
-            r1 = ord('a')
-            r1 = r1 + z - j
-            h = chr(r1)
-        elif (j >= ord('X') and j <= ord('Z')):
-            z = ord('Z')
-            r1 = ord('A')
-            r1 = r1 + z - j
-            h = chr(r1)
-        ciphertext += h
+        if (ord('a') <= j <= ord('z')) or (ord('A') <= j <= ord('Z')):
+            if (ord('a') <= j <= ord('w')) or (ord('A') <= j <= ord('W')):
+                h = chr(j + 3)
+            else:
+                h = chr(j - 23)
+        ciphertext = ciphertext + h
+
     return ciphertext
 
 
@@ -46,18 +40,11 @@ def decrypt_caesar(ciphertext: str) -> str:
     for i in range(len(ciphertext)):
         u = ciphertext[i]  # символ
         t = ord(ciphertext[i])
-        if (t >= ord('d') and t <= ord('z')) or (t >= ord('D') and t <= ord('Z')):
-            u = chr(t - 3)
-        elif (t >= ord('a') and t <= ord('c')):
-            z = ord('z')
-            r1 = ord('a')
-            r1 = z -(t - r1)
-            u = chr(r1)
-        elif (t >= ord('A') and t <= ord('C')):
-            z = ord('Z')
-            r1 = ord('A')
-            r1 = z -(t - r1)
-            u = chr(r1)
+        if (ord('a') <= t <= ord('z')) or (ord('A') <= t <= ord('Z')):
+            if (ord('d') <= t <= ord('z')) or (ord('D') <= t <= ord('Z')):
+                u = chr(t - 3)
+            else:
+                u = chr(t + 23)
         plaintext += u
     return plaintext
 

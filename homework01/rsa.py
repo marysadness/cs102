@@ -13,12 +13,18 @@ def is_prime(n):
     False
     """
     # PUT YOUR CODE HERE
-    prime = True
-    for i in range(2, n // 2 + 1):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 5
+    while i * i <= n:
         if n % i == 0:
-            prime = False
-            break
-    return prime
+            return False
+        i += 2
+    return True
 
 
 def gcd(a, b):

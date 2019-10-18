@@ -73,13 +73,13 @@ def generate_keypair(p, q):
     n = p * q
     phi = (p - 1) * (q - 1)
 
-    # Choose an integer e such that e and phi(n) are coprime
-    e = random.randrange(1, phi)
+    # Choose an integer e such that e    and phi(n) are coprime
+    e = 6229
 
     # Use Euclid's Algorithm to verify that e and phi(n) are comprime
     g = gcd(e, phi)
     while g != 1:
-        e = random.randrange(1, phi)
+        e = 6229
         g = gcd(e, phi)
 
     # Use Extended Euclid's Algorithm to generate the private key
@@ -117,3 +117,6 @@ if __name__ == '__main__':
     print("Decrypting message with public key ", public, " . . .")
     print("Your message is:")
     print(decrypt(public, encrypted_msg))
+
+print(generate_keypair(113, 193))
+print(encrypt(6397, 21809, 209))

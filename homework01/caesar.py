@@ -47,6 +47,3 @@ def decrypt_caesar(ciphertext: str) -> str:
                 u = chr(t + 23)
         plaintext += u
     return plaintext
-
-
-    return plaintext

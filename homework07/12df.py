@@ -1,42 +1,24 @@
 import socket
 
-def main(host: str = 'localhost', port: int = 9090) -> None:
-    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
-    serversocket.bind((host, port))
-    serversocket.listen(5)
-    socket.setdefaulttimeout(10)
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server_socket.bind(('localhost', 5001))
+server_socket.listen()
 
-    print(f"Starting Echo Server at {host}:{port}")
-    try:
-        while True:
-            clientsocket, (client_address, client_port) = serversocket.accept()
-            print(f"New client {client_address}:{client_port}")
+while True:
+    print('Before .accept()')
+    client_socket, addr = server_socket.accept()
+    print('Connection from', addr)
 
-            while True:
-                try:
-                    data = clientsocket.recv(1024)
-                    print(f"Recv: {data}")
-                except OSError:
-                    break
+    while True:
+        print('Befire .recv()')
+        request = client_socket.recv(4096)
 
-                if not len(data):
-                    break
+        if not request:
+            break
+        else:
+            response = 'Hello world'.encode()
+            client_socket.send(response)
 
-                sent_data = data
-                while True:
-                    sent_len = clientsocket.send(sent_data)
-                    if sent_len == len(data):
-                        break
-                    sent_data = sent_data[sent_len:]
-                print(f"Send: {data}")
-
-            clientsocket.close()
-            print(f"Bye-bye: {client_address}:{client_port}")
-    except KeyboardInterrupt:
-        print("Shutting down")
-    finally:
-        serversocket.close()
-
-if __name__ == "__main__":
-    main()
+    print('Outside inner..')
+    client_socket.close()
